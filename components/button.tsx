@@ -1,13 +1,8 @@
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { type VariantProps, cva } from "class-variance-authority";
 import { forwardRef } from "react";
-import {
-  Animated,
-  Pressable,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Pressable, Text, TouchableOpacity, View } from "react-native";
+import Animated, { useSharedValue, withSpring } from "react-native-reanimated";
 
 import { cn } from "../lib/utils";
 
@@ -66,6 +61,8 @@ interface ButtonProps
   loading?: boolean;
 }
 
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+
 const Button = forwardRef<View, ButtonProps>(
   (
     {
@@ -81,42 +78,35 @@ const Button = forwardRef<View, ButtonProps>(
     },
     ref
   ) => {
-    const animated = new Animated.Value(1);
+    const opacity = useSharedValue(1);
 
-    const fadeIn = () => {
-      Animated.timing(animated, {
-        toValue: activeOpacity,
-        duration: 100,
-        useNativeDriver: true,
-      }).start();
+    const handlePressIn = () => {
+      opacity.value = withSpring(activeOpacity);
     };
-    const fadeOut = () => {
-      Animated.timing(animated, {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: true,
-      }).start();
+
+    const handlePressOut = () => {
+      opacity.value = withSpring(1);
     };
 
     return (
-      <Pressable onPressIn={fadeIn} onPressOut={fadeOut} {...props} ref={ref}>
-        <Animated.View
-          className={cn(buttonVariants({ variant, size, className }))}
-          style={{
-            opacity: animated,
-          }}>
-          <Text
-            className={cn(
-              buttonTextVariants({ variant, size, className: labelClasses })
-            )}>
-            {label}
+      <AnimatedPressable
+        className={cn(buttonVariants({ variant, size, className }))}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+        style={{ opacity }}
+        {...props}
+        ref={ref}>
+        <Text
+          className={cn(
+            buttonTextVariants({ variant, size, className: labelClasses })
+          )}>
+          {label}
 
-            {loading ? (
-              <AntDesign name="loading1" size={24} className="animate-spin" />
-            ) : null}
-          </Text>
-        </Animated.View>
-      </Pressable>
+          {loading ? (
+            <AntDesign name="loading1" size={24} className="animate-spin" />
+          ) : null}
+        </Text>
+      </AnimatedPressable>
     );
   }
 );
