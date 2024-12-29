@@ -2,6 +2,11 @@
   "name": "expo-app-router",
   "main": "expo-router/entry",
   "version": "1.0.0",
+  "author": {
+    "name": "SyntaxLexx",
+    "email": "syntaxlexx@gmail.com",
+    "url": "https://x.com/syntaxlexx"
+  },
   "scripts": {
     "start": "expo start",
     "debug": "DEBUG=nativewind expo start -c",
