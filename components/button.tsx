@@ -1,6 +1,7 @@
-import { type VariantProps, cva } from "class-variance-authority";
-import { Text, TouchableOpacity } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import { type VariantProps, cva } from "class-variance-authority";
+import { Pressable, Text, TouchableOpacity, View } from "react-native";
+import { forwardRef } from "react";
 
 import { cn } from "../lib/utils";
 
@@ -58,31 +59,30 @@ interface ButtonProps
   labelClasses?: string;
   loading?: boolean;
 }
-function Button({
-  label,
-  labelClasses,
-  className,
-  variant,
-  size,
-  loading,
-  ...props
-}: ButtonProps) {
-  return (
-    <TouchableOpacity
-      className={cn(buttonVariants({ variant, size, className }))}
-      {...props}>
-      <Text
-        className={cn(
-          buttonTextVariants({ variant, size, className: labelClasses })
-        )}>
-        {label}
 
-        {loading ? (
-          <AntDesign name="loading1" size={24} className="animate-spin" />
-        ) : null}
-      </Text>
-    </TouchableOpacity>
-  );
-}
+const Button = forwardRef<View, ButtonProps>(
+  (
+    { label, labelClasses, className, variant, size, loading, ...props },
+    ref
+  ) => {
+    return (
+      <Pressable
+        className={cn(buttonVariants({ variant, size, className }))}
+        {...props}
+        ref={ref}>
+        <Text
+          className={cn(
+            buttonTextVariants({ variant, size, className: labelClasses })
+          )}>
+          {label}
 
-export { Button, buttonVariants, buttonTextVariants };
+          {loading ? (
+            <AntDesign name="loading1" size={24} className="animate-spin" />
+          ) : null}
+        </Text>
+      </Pressable>
+    );
+  }
+);
+
+export { Button, buttonTextVariants, buttonVariants };

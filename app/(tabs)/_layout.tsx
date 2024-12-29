@@ -1,4 +1,3 @@
-import AntDesign from "@expo/vector-icons/AntDesign";
 import { Tabs } from "expo-router";
 import React from "react";
 import { Platform } from "react-native";
@@ -8,6 +7,7 @@ import { IconSymbol } from "@/components/ui/IconSymbol";
 import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -46,11 +46,11 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="printer"
+        name="overview"
         options={{
-          title: "Printer Testing",
+          title: "Overview",
           tabBarIcon: ({ color }) => (
-            <AntDesign name="printer" size={28} color={color} />
+            <FontAwesome5 name="globe" size={28} color={color} />
           ),
         }}
       />
