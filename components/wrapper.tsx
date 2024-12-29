@@ -6,10 +6,7 @@ interface Props extends ViewProps {}
 function Wrapper({ style, className, ...otherProps }: Props) {
   return (
     <View
-      className={cn(
-        "container py-4 overflow-hidden flex gap-y-3 bg-background",
-        className
-      )}
+      className={cn("container py-4 overflow-hidden flex gap-y-3", className)}
       style={[style]}
       {...otherProps}
     />

@@ -1,5 +1,6 @@
 import { type VariantProps, cva } from "class-variance-authority";
 import { Text, TouchableOpacity } from "react-native";
+import AntDesign from "@expo/vector-icons/AntDesign";
 
 import { cn } from "../lib/utils";
 
@@ -55,6 +56,7 @@ interface ButtonProps
     VariantProps<typeof buttonVariants> {
   label: string;
   labelClasses?: string;
+  loading?: boolean;
 }
 function Button({
   label,
@@ -62,6 +64,7 @@ function Button({
   className,
   variant,
   size,
+  loading,
   ...props
 }: ButtonProps) {
   return (
@@ -73,6 +76,10 @@ function Button({
           buttonTextVariants({ variant, size, className: labelClasses })
         )}>
         {label}
+
+        {loading ? (
+          <AntDesign name="loading1" size={24} className="animate-spin" />
+        ) : null}
       </Text>
     </TouchableOpacity>
   );

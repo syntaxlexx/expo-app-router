@@ -1,7 +1,7 @@
+import AntDesign from "@expo/vector-icons/AntDesign";
 import { Tabs } from "expo-router";
 import React from "react";
 import { Platform } from "react-native";
-import AntDesign from "@expo/vector-icons/AntDesign";
 
 import { HapticTab } from "@/components/HapticTab";
 import { IconSymbol } from "@/components/ui/IconSymbol";

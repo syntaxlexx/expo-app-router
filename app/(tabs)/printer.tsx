@@ -9,12 +9,13 @@ import {
 } from "@/components/card";
 import { ThemedText } from "@/components/ThemedText";
 import { Wrapper } from "@/components/wrapper";
+import { Link } from "expo-router";
 import { ScrollView, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Printer = () => {
   return (
-    <SafeAreaView>
+    <SafeAreaView className="bg-background h-full">
       <ScrollView>
         <Wrapper>
           <ThemedText type="title">Printer Testing</ThemedText>
@@ -22,24 +23,25 @@ const Printer = () => {
             Let's test out the ECS/POS printer
           </ThemedText>
 
-          {new Array(10).fill(0).map((_, i) => (
-            <Card key={i}>
-              <CardHeader>
-                <CardTitle>Accelerate UI</CardTitle>
-                <CardDescription>
-                  Enter a new development experience
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Text className="text-base">
-                  Sleek, easy to use components to build your next app faster.
-                </Text>
-              </CardContent>
-              <CardFooter>
-                <Button label="Click Me" variant={"secondary"}></Button>
-              </CardFooter>
-            </Card>
-          ))}
+          <Card>
+            <CardHeader>
+              <CardTitle>Simple Printout</CardTitle>
+              <CardDescription>
+                Testing out POS Printer with simple printout
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Text className="text-base">Select an action below</Text>
+            </CardContent>
+            <CardFooter>
+              <Link href="/discover" asChild>
+                <Button label="View Printers" />
+              </Link>
+              <Link href="/about" asChild>
+                <Button label="About Us" variant={"ghost"} />
+              </Link>
+            </CardFooter>
+          </Card>
         </Wrapper>
       </ScrollView>
     </SafeAreaView>
