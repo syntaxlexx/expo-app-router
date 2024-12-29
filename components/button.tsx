@@ -1,7 +1,13 @@
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { type VariantProps, cva } from "class-variance-authority";
-import { Pressable, Text, TouchableOpacity, View } from "react-native";
 import { forwardRef } from "react";
+import {
+  Animated,
+  Pressable,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import { cn } from "../lib/utils";
 
@@ -62,24 +68,54 @@ interface ButtonProps
 
 const Button = forwardRef<View, ButtonProps>(
   (
-    { label, labelClasses, className, variant, size, loading, ...props },
+    {
+      label,
+      labelClasses,
+      className,
+      variant,
+      size,
+      style,
+      activeOpacity = 0.5,
+      loading,
+      ...props
+    },
     ref
   ) => {
-    return (
-      <Pressable
-        className={cn(buttonVariants({ variant, size, className }))}
-        {...props}
-        ref={ref}>
-        <Text
-          className={cn(
-            buttonTextVariants({ variant, size, className: labelClasses })
-          )}>
-          {label}
+    const animated = new Animated.Value(1);
 
-          {loading ? (
-            <AntDesign name="loading1" size={24} className="animate-spin" />
-          ) : null}
-        </Text>
+    const fadeIn = () => {
+      Animated.timing(animated, {
+        toValue: activeOpacity,
+        duration: 100,
+        useNativeDriver: true,
+      }).start();
+    };
+    const fadeOut = () => {
+      Animated.timing(animated, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    };
+
+    return (
+      <Pressable onPressIn={fadeIn} onPressOut={fadeOut} {...props} ref={ref}>
+        <Animated.View
+          className={cn(buttonVariants({ variant, size, className }))}
+          style={{
+            opacity: animated,
+          }}>
+          <Text
+            className={cn(
+              buttonTextVariants({ variant, size, className: labelClasses })
+            )}>
+            {label}
+
+            {loading ? (
+              <AntDesign name="loading1" size={24} className="animate-spin" />
+            ) : null}
+          </Text>
+        </Animated.View>
       </Pressable>
     );
   }

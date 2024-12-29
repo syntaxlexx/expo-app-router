@@ -33,7 +33,7 @@ export default function Page() {
             </CardContent>
             <CardFooter>
               <Link href="/about" asChild>
-                <Button label="About Us" variant={"ghost"} />
+                <Button label="About Us" />
               </Link>
             </CardFooter>
           </Card>
