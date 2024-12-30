@@ -1,14 +1,13 @@
 import IndeterminateProgressBar from "@/components/indeterminate-progress-bar";
-import Paginator from "@/components/paginator";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ThemedText } from "@/components/ui/themed-text";
 import { Wrapper } from "@/components/wrapper";
-import { useQuery } from "@tanstack/react-query";
-import React from "react";
-import { Image, ScrollView, Text, View } from "react-native";
-import { api } from "../api";
 import { INDETERMINATE_PROGRESS_BAR_HEIGHT } from "@/lib/constants";
-import { Post } from "@/types";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import React from "react";
+import { ActivityIndicator, Image, ScrollView, Text, View } from "react-native";
+import { api } from "../api";
 
 const hero = {
   height: 100,
@@ -16,17 +15,28 @@ const hero = {
 };
 
 export default function Page() {
-  const [page, setPage] = React.useState(1);
   const [limit, setLimit] = React.useState(10);
-  const [posts, setPosts] = React.useState<Post[]>([]);
 
-  const { data, error, isLoading } = useQuery({
-    queryKey: ["posts", { page, limit }],
-    queryFn: () =>
+  const {
+    data,
+    error,
+    isLoading,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteQuery({
+    queryKey: ["paginatedPosts"],
+    queryFn: ({ pageParam }) =>
       api.posts.fetchPosts({
-        page,
+        page: pageParam ?? 1,
         limit,
       }),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) => {
+      console.log("lastPage.nextPage", lastPage.nextPage);
+      return lastPage.nextPage;
+    },
+    getPreviousPageParam: (firstPage, allPages) => firstPage.prevPage,
   });
 
   return (
@@ -49,7 +59,7 @@ export default function Page() {
       </View>
 
       <View style={{ height: INDETERMINATE_PROGRESS_BAR_HEIGHT }}>
-        {isLoading && <IndeterminateProgressBar />}
+        {(isLoading || isFetchingNextPage) && <IndeterminateProgressBar />}
       </View>
 
       <ScrollView>
@@ -58,38 +68,55 @@ export default function Page() {
 
           {!error && (
             <View className="flex gap-4">
-              {data?.posts.map((post) => (
-                <Card key={post.id}>
-                  <CardHeader>
-                    <CardTitle>{post.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <Text>{post.body}</Text>
-                  </CardContent>
-                </Card>
+              {data?.pages?.map((page, pageIndex) => (
+                <View key={pageIndex} className="flex gap-4">
+                  {page.data.map((post) => (
+                    <Card key={post.id}>
+                      <CardHeader>
+                        <CardTitle>{post.title}</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <Text>{post.body}</Text>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </View>
               ))}
+
+              {/* next pages */}
+              <View style={{ marginTop: 20 }} className="flex gap-4">
+                {isFetchingNextPage ? (
+                  <ActivityIndicator />
+                ) : hasNextPage ? (
+                  <Button onPress={() => fetchNextPage()} label="Load More" />
+                ) : (
+                  <View>
+                    <ThemedText type="default" className="text-center">
+                      No more posts
+                    </ThemedText>
+                  </View>
+                )}
+              </View>
             </View>
           )}
         </Wrapper>
         <View style={{ height: 24 }}></View>
       </ScrollView>
 
-      <Wrapper className="flex flex-row items-center gap-2 py-2 bg-background">
-        <View className="flex-1">
-          <ThemedText type="default">
-            Page {page} &middot; {data?.posts?.length} posts
-          </ThemedText>
-        </View>
-        <View className="flex-shrink">
-          <Paginator
-            onPrevPage={() => setPage(page - 1)}
-            onNextPage={() => setPage(page + 1)}
-            page={page}
-            hasPrevPage={page > 1}
-            hasNextPage={(data?.posts?.length || 1) > 0}
-          />
-        </View>
-      </Wrapper>
+      {data?.pageParams && (
+        <Wrapper className="flex flex-row gap-4 py-2 bg-background">
+          <View className="flex-1">
+            <ThemedText type="default" className="text-left">
+              Page {(data.pageParams as string[])?.pop()}
+            </ThemedText>
+          </View>
+          <View className="flex-grow">
+            <ThemedText className="text-right">
+              {limit} results per page
+            </ThemedText>
+          </View>
+        </Wrapper>
+      )}
     </View>
   );
 }

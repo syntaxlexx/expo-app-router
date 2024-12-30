@@ -26,12 +26,15 @@ export const posts = {
         }
       );
 
-      console.log("url: ", url);
+      console.log("url: ", page, url);
 
       const data = await fetcher(url);
 
       return {
-        posts: data as Post[],
+        data: data as Post[],
+        nextPage: page < 5 ? page + 1 : null,
+        // nextPage: data.length === limit ? page + 1 : null,
+        prevPage: page > 1 ? page - 1 : null,
       };
     } catch (error) {
       console.error("Error: ", error);
