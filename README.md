@@ -7,13 +7,16 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 - React Native New App Architecture 
 - React-Query for amazing UX/DX with APIs
 - Notifications (via expo-notifications) + Deep-Linking
+- Theming by ShadCn-UI CSS variables
 - Sample Screens
    - Blog - posts loaded via useQuery and a *pagination* component
    - Blog Endless-Scroll - posts loaded via useInfiniteQuery
    - Notifications - Send local notifications on device
 
-![Screenshot 1: Blog Endless Scroll Mode using Flatlist](./_files/screenshot-blog-endless-scroll.png)
-![Screenshot 2: Blog manual pagination](./_files/screenshot-blog-manual-pagination.png)
+Blog Endless Scroll Mode using Flatlist             |  Blog manual pagination
+:-------------------------:|:-------------------------:
+![Screenshot 1: Blog Endless Scroll Mode using Flatlist](./_files/screenshot-blog-endless-scroll.png)  |   ![Screenshot 2: Blog manual pagination](./_files/screenshot-blog-manual-pagination.png)
+
 
 ## Get started
 
@@ -61,3 +64,19 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+## EAS
+Common commands to build with EAS. [CLick Here](https://docs.expo.dev/build/setup/) for the latest build steps.
+
+```bash
+# Configure
+eas build:configure
+
+# Build
+eas build --platform android
+eas build --platform ios
+eas build --platform all
+
+# List builds
+eas build:list
+```
