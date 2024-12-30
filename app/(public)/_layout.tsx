@@ -12,6 +12,11 @@ export default function PublicLayout() {
         name="contact"
         options={{ headerShown: true, title: "Contact Us" }}
       />
+
+      <Stack.Screen
+        name="notifications"
+        options={{ headerShown: true, title: "Notifications" }}
+      />
     </Stack>
   );
 }

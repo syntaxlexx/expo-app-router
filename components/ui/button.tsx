@@ -1,7 +1,7 @@
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { type VariantProps, cva } from "class-variance-authority";
 import { forwardRef } from "react";
-import { Pressable, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import Animated, { useSharedValue, withSpring } from "react-native-reanimated";
 
 import { cn } from "@/lib/utils";
@@ -54,11 +54,12 @@ const buttonTextVariants = cva("text-center font-medium", {
 });
 
 interface ButtonProps
-  extends React.ComponentPropsWithoutRef<typeof TouchableOpacity>,
+  extends React.ComponentPropsWithoutRef<typeof Pressable>,
     VariantProps<typeof buttonVariants> {
   label: string;
   labelClasses?: string;
   loading?: boolean;
+  activeOpacity?: number;
 }
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
@@ -72,8 +73,8 @@ const Button = forwardRef<View, ButtonProps>(
       variant,
       size,
       style,
-      activeOpacity = 0.5,
       loading,
+      activeOpacity = 0.5,
       ...props
     },
     ref
