@@ -1,16 +1,15 @@
 import IndeterminateProgressBar from "@/components/indeterminate-progress-bar";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ThemedText } from "@/components/ui/themed-text";
 import { Wrapper } from "@/components/wrapper";
 import { INDETERMINATE_PROGRESS_BAR_HEIGHT } from "@/lib/constants";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import {
   ActivityIndicator,
   FlatList,
   Image,
-  ScrollView,
+  RefreshControl,
   Text,
   View,
 } from "react-native";
@@ -22,7 +21,10 @@ const hero = {
 };
 
 export default function Page() {
+  const queryClient = useQueryClient();
+
   const [limit, setLimit] = React.useState(10);
+  const [isRefreshing, setIsRefreshing] = React.useState(false);
 
   const {
     data,
@@ -31,6 +33,7 @@ export default function Page() {
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
+    refetch,
   } = useInfiniteQuery({
     queryKey: ["paginatedPosts"],
     queryFn: ({ pageParam }) =>
@@ -42,6 +45,20 @@ export default function Page() {
     getNextPageParam: (lastPage, allPages) => lastPage.nextPage,
     getPreviousPageParam: (firstPage, allPages) => firstPage.prevPage,
   });
+
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    // Clear the cache for this query
+    queryClient.removeQueries({ queryKey: "paginatedPosts", exact: true });
+    // Reset the pageParams to their initial state
+    queryClient.setQueryData(["paginatedPosts"], () => ({
+      pages: [],
+      pageParams: [],
+    }));
+
+    await refetch();
+    setIsRefreshing(false);
+  };
 
   const posts = data?.pages.flatMap((page) => page.data) || [];
 
@@ -100,6 +117,14 @@ export default function Page() {
                 </ThemedText>
               </View>
             ) : null
+          }
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={handleRefresh}
+              colors={["#ff6347"]} // Android specific
+              tintColor="#ff6347" // iOS specific
+            />
           }
         />
       )}
