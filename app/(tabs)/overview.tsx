@@ -1,4 +1,4 @@
-import { Button } from "@/components/button";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -6,8 +6,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/card";
-import { ThemedText } from "@/components/themed-text";
+} from "@/components/ui/card";
+import { ThemedText } from "@/components/ui/themed-text";
 import { Wrapper } from "@/components/wrapper";
 import { Link } from "expo-router";
 import { ScrollView, Text } from "react-native";

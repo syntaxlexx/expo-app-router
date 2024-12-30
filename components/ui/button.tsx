@@ -4,7 +4,7 @@ import { forwardRef } from "react";
 import { Pressable, Text, TouchableOpacity, View } from "react-native";
 import Animated, { useSharedValue, withSpring } from "react-native-reanimated";
 
-import { cn } from "../lib/utils";
+import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
   "flex flex-row items-center justify-center whitespace-nowrap rounded-md",

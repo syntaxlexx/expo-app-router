@@ -1,4 +1,4 @@
-import { Button } from "@/components/button";
+import { Button } from "@/components/ui/button";
 import { Wrapper } from "@/components/wrapper";
 import { Link, Stack } from "expo-router";
 import React from "react";

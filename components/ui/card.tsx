@@ -1,6 +1,6 @@
 import { Text, View } from "react-native";
 
-import { cn } from "../lib/utils";
+import { cn } from "@/lib/utils";
 
 function Card({
   className,

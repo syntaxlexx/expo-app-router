@@ -1,7 +1,10 @@
+import { API_URL } from "@/lib/constants";
 import { RequestInit, HeadersInit } from "node-fetch";
 
 export const fetcher = async (url: string, options: RequestInit = {}) => {
-  const response = await fetch(url, {
+  url = url.startsWith("/") ? url : `/${url}`;
+
+  const response = await fetch(`${API_URL}${url}`, {
     ...options,
     headers: {
       "Content-Type": "application/json",

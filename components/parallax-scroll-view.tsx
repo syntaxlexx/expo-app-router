@@ -7,7 +7,7 @@ import Animated, {
   useScrollViewOffset,
 } from "react-native-reanimated";
 
-import { ThemedView } from "@/components/themed-view";
+import { ThemedView } from "@/components/ui/themed-view";
 import { useBottomTabOverflow } from "@/components/ui/tab-bar-background";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 

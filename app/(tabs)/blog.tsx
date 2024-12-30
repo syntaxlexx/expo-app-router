@@ -1,10 +1,14 @@
+import IndeterminateProgressBar from "@/components/indeterminate-progress-bar";
+import Paginator from "@/components/paginator";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ThemedText } from "@/components/ui/themed-text";
 import { Wrapper } from "@/components/wrapper";
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { Image, ScrollView, Text, View } from "react-native";
-import { useQuery } from "@tanstack/react-query";
 import { api } from "../api";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/card";
-import { ThemedText } from "@/components/themed-text";
+import { INDETERMINATE_PROGRESS_BAR_HEIGHT } from "@/lib/constants";
+import { Post } from "@/types";
 
 const hero = {
   height: 100,
@@ -12,9 +16,17 @@ const hero = {
 };
 
 export default function Page() {
+  const [page, setPage] = React.useState(1);
+  const [limit, setLimit] = React.useState(10);
+  const [posts, setPosts] = React.useState<Post[]>([]);
+
   const { data, error, isLoading } = useQuery({
-    queryKey: ["posts"],
-    queryFn: () => api.posts.fetchPosts(),
+    queryKey: ["posts", { page, limit }],
+    queryFn: () =>
+      api.posts.fetchPosts({
+        page,
+        limit,
+      }),
   });
 
   return (
@@ -36,9 +48,12 @@ export default function Page() {
         </View>
       </View>
 
+      <View style={{ height: INDETERMINATE_PROGRESS_BAR_HEIGHT }}>
+        {isLoading && <IndeterminateProgressBar />}
+      </View>
+
       <ScrollView>
         <Wrapper>
-          {isLoading && <Text>Loading...</Text>}
           {error && <Text>Error: {error.message}</Text>}
 
           {!error && (
@@ -59,11 +74,22 @@ export default function Page() {
         <View style={{ height: 24 }}></View>
       </ScrollView>
 
-      <View style={{ padding: 8 }}>
-        <ThemedText type="default" className="text-center">
-          Showing {data?.posts?.length} posts
-        </ThemedText>
-      </View>
+      <Wrapper className="flex flex-row items-center gap-2 py-2 bg-background">
+        <View className="flex-1">
+          <ThemedText type="default">
+            Page {page} &middot; {data?.posts?.length} posts
+          </ThemedText>
+        </View>
+        <View className="flex-shrink">
+          <Paginator
+            onPrevPage={() => setPage(page - 1)}
+            onNextPage={() => setPage(page + 1)}
+            page={page}
+            hasPrevPage={page > 1}
+            hasNextPage={(data?.posts?.length || 1) > 0}
+          />
+        </View>
+      </Wrapper>
     </View>
   );
 }
