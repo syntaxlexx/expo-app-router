@@ -17,8 +17,7 @@ export const posts = {
           _start: (page - 1) * limit,
         },
         {
-          skipEmptyString: true,
-          skipNull: true,
+          skipNulls: true,
         }
       );
 
