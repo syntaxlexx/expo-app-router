@@ -47,6 +47,15 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="blog-flatlist"
+        options={{
+          title: "Blog (FL)",
+          tabBarIcon: ({ color }) => (
+            <Entypo name="documents" size={28} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="overview"
         options={{
           title: "Overview",

@@ -32,8 +32,8 @@ export const posts = {
 
       return {
         data: data as Post[],
-        nextPage: page < 5 ? page + 1 : null,
         // nextPage: data.length === limit ? page + 1 : null,
+        nextPage: page < 5 ? page + 1 : null,
         prevPage: page > 1 ? page - 1 : null,
       };
     } catch (error) {

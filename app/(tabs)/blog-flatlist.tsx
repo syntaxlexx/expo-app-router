@@ -6,7 +6,14 @@ import { Wrapper } from "@/components/wrapper";
 import { INDETERMINATE_PROGRESS_BAR_HEIGHT } from "@/lib/constants";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React from "react";
-import { ActivityIndicator, Image, ScrollView, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  Image,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
 import { api } from "../api";
 
 const hero = {
@@ -36,6 +43,8 @@ export default function Page() {
     getPreviousPageParam: (firstPage, allPages) => firstPage.prevPage,
   });
 
+  const posts = data?.pages.flatMap((page) => page.data) || [];
+
   return (
     <View style={{ flex: 1 }}>
       <View className="relative w-full" style={{ height: hero.height }}>
@@ -50,7 +59,7 @@ export default function Page() {
 
         <View className="w-full h-full flex items-center justify-center">
           <ThemedText type="title" className="text-center">
-            Blog
+            Blog (Endless Scroll)
           </ThemedText>
         </View>
       </View>
@@ -59,52 +68,49 @@ export default function Page() {
         {(isLoading || isFetchingNextPage) && <IndeterminateProgressBar />}
       </View>
 
-      <ScrollView>
-        <Wrapper>
-          {error && <Text>Error: {error.message}</Text>}
+      <Wrapper>{error && <Text>Error: {error.message}</Text>}</Wrapper>
 
-          {!error && (
-            <View className="flex gap-4">
-              {data?.pages?.map((page, pageIndex) => (
-                <View key={pageIndex} className="flex gap-4">
-                  {page.data.map((post) => (
-                    <Card key={post.id}>
-                      <CardHeader>
-                        <CardTitle>{post.title}</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <Text>{post.body}</Text>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </View>
-              ))}
-
-              {/* next pages */}
-              <View style={{ marginTop: 20 }} className="flex gap-4">
-                {isFetchingNextPage ? (
-                  <ActivityIndicator />
-                ) : hasNextPage ? (
-                  <Button onPress={() => fetchNextPage()} label="Load More" />
-                ) : (
-                  <View>
-                    <ThemedText type="default" className="text-center">
-                      No more posts
-                    </ThemedText>
-                  </View>
-                )}
-              </View>
-            </View>
+      {!error && (
+        <FlatList
+          data={posts}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <Wrapper key={item.id}>
+              <Card>
+                <CardHeader>
+                  <CardTitle>{item.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Text>{item.body}</Text>
+                </CardContent>
+              </Card>
+            </Wrapper>
           )}
-        </Wrapper>
-        <View style={{ height: 24 }}></View>
-      </ScrollView>
+          onEndReached={() => {
+            if (hasNextPage) fetchNextPage();
+          }}
+          onEndReachedThreshold={0.5}
+          ListFooterComponent={
+            isFetchingNextPage ? (
+              <ActivityIndicator />
+            ) : !hasNextPage ? (
+              <View>
+                <ThemedText type="default" className="text-center">
+                  No more posts
+                </ThemedText>
+              </View>
+            ) : null
+          }
+        />
+      )}
+
+      <View style={{ height: 24 }}></View>
 
       {data?.pageParams && (
         <Wrapper className="flex flex-row gap-4 py-2 bg-background">
           <View className="flex-1">
             <ThemedText type="default" className="text-left">
-              Page: {(data.pageParams as string[])?.pop()}
+              Pages: {(data.pageParams as string[])?.pop()}
             </ThemedText>
           </View>
           <View className="flex-grow">
