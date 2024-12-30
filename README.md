@@ -2,6 +2,16 @@
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
+### Features
+- Expo SDK 52
+- React Native New App Architecture 
+- React-Query for amazing UX/DX with APIs
+- Notifications (via expo-notifications) + Deep-Linking
+- Sample Screens
+   - Blog - posts loaded via useQuery and a *pagination* component
+   - Blog Endless-Scroll - posts loaded via useInfiniteQuery
+   - Notifications - Send local notifications on device
+
 ![Screenshot 1: Blog Endless Scroll Mode using Flatlist](./_files/screenshot-blog-endless-scroll.png)
 ![Screenshot 2: Blog manual pagination](./_files/screenshot-blog-manual-pagination.png)
 
