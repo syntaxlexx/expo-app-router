@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Wrapper } from "@/components/wrapper";
-import { Link, Stack } from "expo-router";
+import { Link } from "expo-router";
 import React from "react";
-import { Text, View } from "react-native";
+import { Text } from "react-native";
 
 export default function Page() {
   return (

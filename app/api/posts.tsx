@@ -1,7 +1,6 @@
 import { Post } from "@/types";
+import qs from "qs";
 import { fetcher } from "./fetcher";
-import { API_URL } from "@/lib/constants";
-import queryString from "query-string";
 
 export const posts = {
   fetchPosts: async ({
@@ -12,13 +11,10 @@ export const posts = {
     limit: number;
   }) => {
     try {
-      const url = queryString.stringifyUrl(
+      const url = qs.stringify(
         {
-          url: `posts`,
-          query: {
-            _limit: limit,
-            _start: (page - 1) * limit,
-          },
+          _limit: limit,
+          _start: (page - 1) * limit,
         },
         {
           skipEmptyString: true,
@@ -28,7 +24,7 @@ export const posts = {
 
       console.log("url: ", page, url);
 
-      const data = await fetcher(url);
+      const data = await fetcher(`/posts?${url}`);
 
       return {
         data: data as Post[],

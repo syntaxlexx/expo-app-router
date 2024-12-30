@@ -16,7 +16,7 @@ import {
 import { api } from "../api";
 
 const hero = {
-  height: 100,
+  height: 130,
   image: "https://picsum.photos/seed/picsum/800/600",
 };
 
@@ -108,7 +108,7 @@ export default function Page() {
           }}
           onEndReachedThreshold={0.5}
           ListFooterComponent={
-            isFetchingNextPage ? (
+            isLoading || isFetchingNextPage ? (
               <ActivityIndicator />
             ) : !hasNextPage ? (
               <View>
