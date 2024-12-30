@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/card";
-import { ThemedText } from "@/components/ThemedText";
+import { ThemedText } from "@/components/themed-text";
 import { Wrapper } from "@/components/wrapper";
 import { Link } from "expo-router";
 import { ScrollView, Text } from "react-native";
