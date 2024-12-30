@@ -16,10 +16,10 @@ import {
   focusManager,
 } from "@tanstack/react-query";
 
-import { useColorScheme } from "@/hooks/useColorScheme";
+import { useColorScheme } from "@/hooks/use-color-scheme";
 import { AppStateStatus, Platform } from "react-native";
-import { useOnlineManager } from "@/hooks/query/useOnlineManager";
-import { useAppState } from "@/hooks/query/useAppState";
+import { useOnlineManager } from "@/hooks/query/use-online-manager";
+import { useAppState } from "@/hooks/query/use-app-state";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
