@@ -2,6 +2,9 @@
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
+![Screenshot 1: Blog Endless Scroll Mode using Flatlist](./_files/screenshot-blog-endless-scroll.png)
+![Screenshot 2: Blog manual pagination](./_files/screenshot-blog-manual-pagination.png)
+
 ## Get started
 
 1. Install dependencies
