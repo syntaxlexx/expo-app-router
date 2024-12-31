@@ -1,3 +1,4 @@
+import { AnimatedPressable } from "@/components/animated-pressable";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,11 +10,11 @@ import {
 } from "@/components/ui/card";
 import { ThemedText } from "@/components/ui/themed-text";
 import { Wrapper } from "@/components/wrapper";
-import { Link, LinkProps, Router } from "expo-router";
-import { FlatList, ScrollView, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { setUserHasOnboarded } from "@/storage";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { AnimatedPressable } from "@/components/animated-pressable";
+import { Link, LinkProps, router } from "expo-router";
+import { FlatList, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type PageItem = {
   title: string;
@@ -52,10 +53,24 @@ export default function Page() {
           <CardContent>
             <Text className="text-base">Select an action below</Text>
           </CardContent>
-          <CardFooter>
-            <Link href="/about" asChild>
-              <Button label="About Us" />
-            </Link>
+          <CardFooter className="flex flex-row items-center gap-4">
+            <View className="flex-1">
+              <Link href="/about" asChild>
+                <Button label="About Us" />
+              </Link>
+            </View>
+
+            <View className="flex-1">
+              <Button
+                label="Un-Onboard"
+                variant={"destructive"}
+                onPress={async () => {
+                  await setUserHasOnboarded(false);
+                  console.log("User has un-onboarded");
+                  router.replace("/");
+                }}
+              />
+            </View>
           </CardFooter>
         </Card>
 

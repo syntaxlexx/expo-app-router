@@ -13,6 +13,11 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    - Blog Endless-Scroll - posts loaded via useInfiniteQuery
    - Notifications - Send local notifications on device
 
+Onboarding 1             |  Onboarding 2 | Onboarding 3
+:-------------------:|:-------------------:|:-------------------:
+![Screenshot 3](./_files/screenshot-onboarding-1.png)  |   ![Screenshot 4](./_files/screenshot-onboarding-2.png) | ![Screenshot 5](./_files/screenshot-onboarding-3.png)
+
+
 Blog Endless Scroll Mode using Flatlist             |  Blog manual pagination
 :-------------------------:|:-------------------------:
 ![Screenshot 1: Blog Endless Scroll Mode using Flatlist](./_files/screenshot-blog-endless-scroll.png)  |   ![Screenshot 2: Blog manual pagination](./_files/screenshot-blog-manual-pagination.png)

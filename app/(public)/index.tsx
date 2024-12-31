@@ -14,7 +14,9 @@ export default function TabOneScreen() {
     if (hasOnboarded) {
       console.log("User has onboarded:", hasOnboarded);
 
-      setTimeout(() => router.push("/home"), 1000);
+      setTimeout(() => router.replace("/home"), 1000);
+    } else {
+      setTimeout(() => router.replace("/onboarding"), 2000);
     }
   };
 
@@ -29,7 +31,7 @@ export default function TabOneScreen() {
 
   const handleNextPage = async () => {
     await onboardUser();
-    router.push("/home");
+    router.replace("/home");
   };
 
   return (
@@ -60,7 +62,7 @@ export default function TabOneScreen() {
           Kick-start your app development journey with our supercharged
           template.
         </Text>
-        <Pressable
+        {/* <Pressable
           onPress={handleNextPage}
           className="bg-stone-700 rounded-full p-4 w-full items-center justify-center shadow-lg">
           <Text
@@ -68,7 +70,7 @@ export default function TabOneScreen() {
             style={{ fontFamily: "Medium" }}>
             Get Started
           </Text>
-        </Pressable>
+        </Pressable> */}
       </View>
       <StatusBar style="light" />
     </ImageBackground>
