@@ -17,8 +17,5 @@
   },
   "submit": {
     "production": {}
-  },
-  "env": {
-    "EXPO_USE_COMMUNITY_AUTOLINKING": "1"
   }
 }
