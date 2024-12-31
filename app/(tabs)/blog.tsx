@@ -1,6 +1,7 @@
+import { AnimatedPressable } from "@/components/animated-pressable";
 import IndeterminateProgressBar from "@/components/indeterminate-progress-bar";
+import PostCard from "@/components/post-card";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ThemedText } from "@/components/ui/themed-text";
 import { Wrapper } from "@/components/wrapper";
 import { INDETERMINATE_PROGRESS_BAR_HEIGHT } from "@/lib/constants";
@@ -8,8 +9,6 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import React from "react";
 import { ActivityIndicator, Image, ScrollView, Text, View } from "react-native";
 import { api } from "../api";
-import PostCard from "@/components/post-card";
-import { AnimatedPressable } from "@/components/animated-pressable";
 
 const hero = {
   height: 130,

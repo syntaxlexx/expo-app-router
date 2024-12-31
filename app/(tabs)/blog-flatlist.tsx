@@ -1,5 +1,6 @@
+import { AnimatedPressable } from "@/components/animated-pressable";
 import IndeterminateProgressBar from "@/components/indeterminate-progress-bar";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import PostCard from "@/components/post-card";
 import { ThemedText } from "@/components/ui/themed-text";
 import { Wrapper } from "@/components/wrapper";
 import { INDETERMINATE_PROGRESS_BAR_HEIGHT } from "@/lib/constants";
@@ -14,8 +15,6 @@ import {
   View,
 } from "react-native";
 import { api } from "../api";
-import { AnimatedPressable } from "@/components/animated-pressable";
-import PostCard from "@/components/post-card";
 
 const hero = {
   height: 130,
