@@ -23,10 +23,13 @@ export const posts = {
 
       console.log("url: ", page, url);
 
-      const data = await fetcher(`/posts?${url}`);
+      const data = (await fetcher(`/posts?${url}`)) as Post[];
 
       return {
-        data: data as Post[],
+        data: data.map((v) => ({
+          ...v,
+          image: "https://picsum.photos/seed/picsum/800/600",
+        })),
         // nextPage: data.length === limit ? page + 1 : null,
         nextPage: page < 5 ? page + 1 : null,
         prevPage: page > 1 ? page - 1 : null,

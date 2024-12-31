@@ -8,6 +8,8 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import React from "react";
 import { ActivityIndicator, Image, ScrollView, Text, View } from "react-native";
 import { api } from "../api";
+import PostCard from "@/components/post-card";
+import { AnimatedPressable } from "@/components/animated-pressable";
 
 const hero = {
   height: 130,
@@ -59,29 +61,24 @@ export default function Page() {
         {(isLoading || isFetchingNextPage) && <IndeterminateProgressBar />}
       </View>
 
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <Wrapper>
           {error && <Text>Error: {error.message}</Text>}
 
           {!error && (
-            <View className="flex gap-4">
+            <View className="flex gap-2">
               {data?.pages?.map((page, pageIndex) => (
-                <View key={pageIndex} className="flex gap-4">
+                <View key={pageIndex} className="flex gap-2">
                   {page.data.map((post) => (
-                    <Card key={post.id}>
-                      <CardHeader>
-                        <CardTitle>{post.title}</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <Text>{post.body}</Text>
-                      </CardContent>
-                    </Card>
+                    <AnimatedPressable key={post.id}>
+                      <PostCard post={post} />
+                    </AnimatedPressable>
                   ))}
                 </View>
               ))}
 
               {/* next pages */}
-              <View style={{ marginTop: 20 }} className="flex gap-4">
+              <View style={{ marginTop: 20 }} className="flex gap-2">
                 {isFetchingNextPage ? (
                   <ActivityIndicator />
                 ) : hasNextPage ? (

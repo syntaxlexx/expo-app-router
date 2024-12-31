@@ -66,7 +66,9 @@ Join our community of developers creating universal apps.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
 
 ## EAS
-Common commands to build with EAS. [CLick Here](https://docs.expo.dev/build/setup/) for the latest build steps.
+Common commands to build with EAS. [Click Here](https://docs.expo.dev/build/setup/) for the latest build steps.
+
+>NB: For fresh projects without an existing Android Keystore, it is recommended to first run `eas build --platform android` so as to register a new key with EAS.
 
 ```bash
 # Configure
@@ -76,6 +78,9 @@ eas build:configure
 eas build --platform android
 eas build --platform ios
 eas build --platform all
+
+eas build --platform android --profile preview
+eas build --platform android --profile development
 
 # List builds
 eas build:list

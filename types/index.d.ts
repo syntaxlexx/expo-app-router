@@ -8,4 +8,5 @@ export type Post = Timestamp & {
   userId: number;
   title: string;
   body: string;
+  image: string;
 };

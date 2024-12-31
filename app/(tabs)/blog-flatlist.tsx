@@ -14,6 +14,8 @@ import {
   View,
 } from "react-native";
 import { api } from "../api";
+import { AnimatedPressable } from "@/components/animated-pressable";
+import PostCard from "@/components/post-card";
 
 const hero = {
   height: 130,
@@ -92,21 +94,17 @@ export default function Page() {
           data={posts}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <Wrapper key={item.id}>
-              <Card>
-                <CardHeader>
-                  <CardTitle>{item.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <Text>{item.body}</Text>
-                </CardContent>
-              </Card>
+            <Wrapper key={item.id} className="py-1">
+              <AnimatedPressable key={item.id}>
+                <PostCard post={item} />
+              </AnimatedPressable>
             </Wrapper>
           )}
           onEndReached={() => {
             if (hasNextPage) fetchNextPage();
           }}
           onEndReachedThreshold={0.5}
+          showsVerticalScrollIndicator={false}
           ListFooterComponent={
             isLoading || isFetchingNextPage ? (
               <ActivityIndicator />
