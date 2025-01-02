@@ -10,7 +10,7 @@ export default function Page() {
     <Wrapper>
       <Text>Discover</Text>
 
-      {/* <DiscoverPrinters /> */}
+      <DiscoverPrinters />
     </Wrapper>
   );
 }
