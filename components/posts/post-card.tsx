@@ -1,9 +1,10 @@
-import { View, Text, Image } from "react-native";
-import React from "react";
-import { Card, CardContent } from "./ui/card";
 import { Post } from "@/types";
-import { ThemedText } from "./ui/themed-text";
 import Entypo from "@expo/vector-icons/Entypo";
+import React from "react";
+import { Image, View } from "react-native";
+import { Card, CardContent } from "../ui/card";
+import { ThemedText } from "../ui/themed-text";
+import Animated from "react-native-reanimated";
 
 interface Props {
   post: Post;
@@ -15,10 +16,11 @@ export default function PostCard({ post }: Props) {
       <CardContent className="p-2">
         <View className="flex flex-row gap-2">
           <View className="w-[90px]">
-            <Image
+            <Animated.Image
               src={post.image}
               alt={post.title}
               className="h-20 bg-cover rounded"
+              sharedTransitionTag="post-image"
             />
           </View>
           <View className="flex-1">

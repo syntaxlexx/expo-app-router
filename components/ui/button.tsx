@@ -58,8 +58,9 @@ interface ButtonProps
     VariantProps<typeof buttonVariants> {
   label: string;
   labelClasses?: string;
-  loading?: boolean;
+  isLoading?: boolean;
   activeOpacity?: number;
+  icon?: React.ReactNode;
 }
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
@@ -73,8 +74,9 @@ const Button = forwardRef<View, ButtonProps>(
       variant,
       size,
       style,
-      loading,
+      isLoading,
       activeOpacity = 0.5,
+      icon,
       ...props
     },
     ref
@@ -97,16 +99,23 @@ const Button = forwardRef<View, ButtonProps>(
         style={{ opacity }}
         {...props}
         ref={ref}>
-        <Text
-          className={cn(
-            buttonTextVariants({ variant, size, className: labelClasses })
-          )}>
-          {label}
-
-          {loading ? (
-            <AntDesign name="loading1" size={24} className="animate-spin" />
+        <View className="flex flex-row gap-2 items-center">
+          <Text
+            className={cn(
+              buttonTextVariants({ variant, size, className: labelClasses })
+            )}>
+            {label}
+          </Text>
+          {icon && icon}
+          {isLoading ? (
+            <AntDesign
+              name="loading1"
+              size={16}
+              className="animate-spin"
+              color="white"
+            />
           ) : null}
-        </Text>
+        </View>
       </AnimatedPressable>
     );
   }

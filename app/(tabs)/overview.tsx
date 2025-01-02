@@ -1,3 +1,4 @@
+import AlertError from "@/components/alert-error";
 import { AnimatedPressable } from "@/components/animated-pressable";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,6 +14,7 @@ import { Wrapper } from "@/components/wrapper";
 import { setUserHasOnboarded } from "@/storage";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Link, LinkProps, router } from "expo-router";
+import { useState } from "react";
 import { FlatList, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -37,6 +39,8 @@ const pages: PageItem[] = [
 ];
 
 export default function Page() {
+  const [isLoading, setIsLoading] = useState(false);
+
   return (
     <SafeAreaView className="bg-background h-full">
       <Wrapper>
@@ -102,6 +106,20 @@ export default function Page() {
             />
           </CardContent>
         </Card>
+
+        <AlertError
+          message={`Dev Build\r\nNon-Ya Bizness`}
+          hasRetry
+          isLoading={isLoading}
+          onPressRetry={() => {
+            if (isLoading) return;
+            setIsLoading(true);
+
+            setTimeout(() => {
+              setIsLoading(false);
+            }, 2000);
+          }}
+        />
       </Wrapper>
     </SafeAreaView>
   );

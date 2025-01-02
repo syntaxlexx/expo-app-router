@@ -20,6 +20,8 @@ export default function PublicLayout() {
         name="notifications"
         options={{ headerShown: true, title: "Notifications" }}
       />
+
+      <Stack.Screen name="posts/[id]" options={{ headerShown: false }} />
     </Stack>
   );
 }

@@ -1,6 +1,6 @@
 import { AnimatedPressable } from "@/components/animated-pressable";
 import IndeterminateProgressBar from "@/components/indeterminate-progress-bar";
-import PostCard from "@/components/post-card";
+import PostCard from "@/components/posts/post-card";
 import { ThemedText } from "@/components/ui/themed-text";
 import { Wrapper } from "@/components/wrapper";
 import { INDETERMINATE_PROGRESS_BAR_HEIGHT } from "@/lib/constants";
@@ -15,6 +15,7 @@ import {
   View,
 } from "react-native";
 import { api } from "../api";
+import { Link } from "expo-router";
 
 const hero = {
   height: 130,
@@ -38,7 +39,7 @@ export default function Page() {
   } = useInfiniteQuery({
     queryKey: ["paginatedPosts"],
     queryFn: ({ pageParam }) =>
-      api.posts.fetchPosts({
+      api.posts.index({
         page: pageParam ?? 1,
         limit,
       }),
@@ -94,9 +95,20 @@ export default function Page() {
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
             <Wrapper key={item.id} className="py-1">
-              <AnimatedPressable key={item.id}>
-                <PostCard post={item} />
-              </AnimatedPressable>
+              <Link
+                key={item.id}
+                href={{
+                  pathname: "/posts/[id]",
+                  params: {
+                    id: item.id,
+                    image: item.image,
+                  },
+                }}
+                asChild>
+                <AnimatedPressable>
+                  <PostCard post={item} />
+                </AnimatedPressable>
+              </Link>
             </Wrapper>
           )}
           onEndReached={() => {
