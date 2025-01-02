@@ -47,4 +47,27 @@ export const posts = {
       throw new Error("Error fetching post");
     }
   },
+
+  update: async ({
+    id,
+    input,
+  }: {
+    id: Post["id"];
+    input: Omit<Post, "id">;
+  }) => {
+    try {
+      const data = (await fetcher(`/posts/${id}`, {
+        method: "PUT",
+        body: JSON.stringify(input),
+      })) as Post;
+      console.log("updated data: ", data);
+      return {
+        ...data,
+        image: `https://picsum.photos/id/${id}/800/600`,
+      };
+    } catch (error) {
+      console.error("Error: ", error);
+      throw new Error("Error updating post");
+    }
+  },
 };
