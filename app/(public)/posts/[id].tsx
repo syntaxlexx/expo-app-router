@@ -4,11 +4,17 @@ import { ThemedText } from "@/components/ui/themed-text";
 import { ThemedView } from "@/components/ui/themed-view";
 import { Wrapper } from "@/components/wrapper";
 import { useQuery } from "@tanstack/react-query";
-import { Stack } from "expo-router";
+import { router, Stack } from "expo-router";
 import { useLocalSearchParams } from "expo-router/build/hooks";
 import React from "react";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, Button, View } from "react-native";
 import Animated from "react-native-reanimated";
+import EvilIcons from "@expo/vector-icons/EvilIcons";
+import { AnimatedPressable } from "@/components/animated-pressable";
+import { BackButton } from "@/components/back-button";
+
+const backgroundColor = "rgba(255,255,255,0.2)";
+const borderColor = "rgba(255,255,255,0.5)";
 
 const hero = {
   height: 250,
@@ -36,6 +42,42 @@ export default function Page() {
           headerShown: true,
           headerTransparent: true,
           headerTitle: "",
+          headerLeft: (props) => (
+            <View
+              className="rounded-full flex items-center justify-center border"
+              style={{
+                width: 30,
+                height: 30,
+                backgroundColor,
+                borderColor,
+              }}
+              {...props}>
+              <AnimatedPressable onPress={() => router.back()}>
+                <BackButton color="white" />
+              </AnimatedPressable>
+            </View>
+          ),
+          headerRight: () => {
+            return (
+              <View className="flex flex-row gap-4 items-center justify-end">
+                <View
+                  className="rounded-full flex items-center justify-center border"
+                  style={{
+                    width: 30,
+                    height: 30,
+                    backgroundColor,
+                    borderColor,
+                  }}>
+                  <AnimatedPressable
+                    onPress={() => {
+                      console.log("share");
+                    }}>
+                    <EvilIcons name="share-apple" size={24} color="white" />
+                  </AnimatedPressable>
+                </View>
+              </View>
+            );
+          },
         }}
       />
 
@@ -59,12 +101,14 @@ export default function Page() {
         )}
 
         {error && (
-          <AlertError
-            message={error.message}
-            hasRetry
-            isLoading={isLoading}
-            onPressRetry={refetch}
-          />
+          <Wrapper>
+            <AlertError
+              message={error.message}
+              hasRetry
+              isLoading={isLoading}
+              onPressRetry={refetch}
+            />
+          </Wrapper>
         )}
 
         {post && (

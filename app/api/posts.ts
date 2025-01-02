@@ -36,7 +36,6 @@ export const posts = {
 
   show: async (id: number) => {
     try {
-      throw new Error("Error fetching post");
       const data = (await fetcher(`/posts/${id}`)) as Post;
       console.log("data", data);
       return {
