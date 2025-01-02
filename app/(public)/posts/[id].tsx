@@ -1,4 +1,5 @@
 import { api } from "@/app/api";
+import AlertError from "@/components/alert-error";
 import { ThemedText } from "@/components/ui/themed-text";
 import { ThemedView } from "@/components/ui/themed-view";
 import { Wrapper } from "@/components/wrapper";
@@ -6,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import { useLocalSearchParams } from "expo-router/build/hooks";
 import React from "react";
-import { ActivityIndicator, Text, View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 const hero = {
@@ -21,6 +22,7 @@ export default function Page() {
     error,
     isLoading,
     isError,
+    refetch,
   } = useQuery({
     queryKey: ["posts", id],
     queryFn: () => api.posts.show(Number(id)),
@@ -56,7 +58,14 @@ export default function Page() {
           </View>
         )}
 
-        {error && <Text className="text-center">Error: {error.message}</Text>}
+        {error && (
+          <AlertError
+            message={error.message}
+            hasRetry
+            isLoading={isLoading}
+            onPressRetry={refetch}
+          />
+        )}
 
         {post && (
           <View>

@@ -10,6 +10,7 @@ import React from "react";
 import { ActivityIndicator, Image, ScrollView, Text, View } from "react-native";
 import { api } from "../api";
 import { Link } from "expo-router";
+import AlertError from "@/components/alert-error";
 
 const hero = {
   height: 130,
@@ -26,6 +27,7 @@ export default function Page() {
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
+    refetch,
   } = useInfiniteQuery({
     queryKey: ["paginatedPosts"],
     queryFn: ({ pageParam }) =>
@@ -63,7 +65,14 @@ export default function Page() {
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <Wrapper>
-          {error && <Text>Error: {error.message}</Text>}
+          {error && (
+            <AlertError
+              message={error.message}
+              hasRetry
+              isLoading={isLoading}
+              onPressRetry={refetch}
+            />
+          )}
 
           {!error && (
             <View className="flex gap-2">

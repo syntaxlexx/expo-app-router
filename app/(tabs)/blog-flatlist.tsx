@@ -16,6 +16,7 @@ import {
 } from "react-native";
 import { api } from "../api";
 import { Link } from "expo-router";
+import AlertError from "@/components/alert-error";
 
 const hero = {
   height: 130,
@@ -87,7 +88,16 @@ export default function Page() {
         {(isLoading || isFetchingNextPage) && <IndeterminateProgressBar />}
       </View>
 
-      <Wrapper>{error && <Text>Error: {error.message}</Text>}</Wrapper>
+      <Wrapper>
+        {error && (
+          <AlertError
+            message={error.message}
+            hasRetry
+            isLoading={isLoading}
+            onPressRetry={refetch}
+          />
+        )}
+      </Wrapper>
 
       {!error && (
         <FlatList
