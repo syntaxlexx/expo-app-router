@@ -18,6 +18,7 @@ import {
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
 import Constants from "expo-constants";
+import Toast from "react-native-toast-message";
 
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { AppStateStatus, Platform } from "react-native";
@@ -113,6 +114,7 @@ export default function RootLayout() {
           <Stack.Screen name="+not-found" />
         </Stack>
         <StatusBar style="auto" />
+        <Toast position="bottom" />
       </QueryClientProvider>
     </ThemeProvider>
   );

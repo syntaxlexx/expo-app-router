@@ -12,6 +12,7 @@ import Animated from "react-native-reanimated";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import { AnimatedPressable } from "@/components/animated-pressable";
 import { BackButton } from "@/components/back-button";
+import Toast from "react-native-toast-message";
 
 const backgroundColor = "rgba(255,255,255,0.2)";
 const borderColor = "rgba(255,255,255,0.5)";
@@ -22,6 +23,13 @@ const hero = {
 
 export default function Page() {
   const { id, image } = useLocalSearchParams();
+
+  const showToast = (message: string) => {
+    Toast.show({
+      type: "info",
+      text1: message,
+    });
+  };
 
   const {
     data: post,
@@ -69,10 +77,22 @@ export default function Page() {
                     borderColor,
                   }}>
                   <AnimatedPressable
-                    onPress={() => {
-                      console.log("share");
-                    }}>
+                    onPress={() => showToast("Share Button Clicked")}>
                     <EvilIcons name="share-apple" size={24} color="white" />
+                  </AnimatedPressable>
+                </View>
+
+                <View
+                  className="rounded-full flex items-center justify-center border"
+                  style={{
+                    width: 30,
+                    height: 30,
+                    backgroundColor,
+                    borderColor,
+                  }}>
+                  <AnimatedPressable
+                    onPress={() => showToast("Favourite Button Clicked")}>
+                    <EvilIcons name="heart" size={24} color="white" />
                   </AnimatedPressable>
                 </View>
               </View>
