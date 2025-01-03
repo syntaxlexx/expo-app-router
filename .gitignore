@@ -38,3 +38,7 @@ yarn-error.*
 app-example
 
 .env
+
+# ignore prebuilds for EAS builds
+android/
+ios/

@@ -3,6 +3,7 @@ import { Text, View } from "react-native";
 import { usePrintersDiscovery } from "react-native-esc-pos-printer";
 import { Button } from "../button";
 import { PrintersList } from "./printers-list";
+import { router } from "expo-router";
 
 const DiscoverPrinters = memo(() => {
   const { start, printerError, isDiscovering, printers } =
@@ -29,6 +30,12 @@ const DiscoverPrinters = memo(() => {
         printers={printers}
         onPress={(v) => {
           console.log("onPress: ", v);
+          router.push({
+            pathname: "/view-printer",
+            params: {
+              printer: JSON.stringify(v),
+            },
+          });
         }}
       />
     </View>

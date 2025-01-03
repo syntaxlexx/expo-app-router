@@ -7,6 +7,10 @@ export default function PrintersLayout() {
         name="discover"
         options={{ headerShown: true, title: "Discover Printers" }}
       />
+      <Stack.Screen
+        name="view-printer"
+        options={{ headerShown: true, title: "View Printer" }}
+      />
     </Stack>
   );
 }

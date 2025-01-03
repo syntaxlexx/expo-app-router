@@ -25,7 +25,8 @@ const PrinterItem = ({ printer, onPress }: PrinterItemProps) => {
       className="border border-b px-4 py-2"
       onPress={() => onPress(printer)}>
       <Text className="font-semibold">{printer.deviceName}</Text>
-      <Text className="font-medium">target: {printer.target}</Text>
+      <Text className="font-medium">Target: {printer.target}</Text>
+      <Text className="">IP: {printer.ipAddress}</Text>
     </Pressable>
   );
 };
